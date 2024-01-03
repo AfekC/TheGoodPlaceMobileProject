@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.thegoodplace"
+    namespace = "com.example.thegoodplaceapp"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.thegoodplace"
+        applicationId = "com.example.thegoodplaceapp"
         minSdk = 28
         targetSdk = 34
         versionCode = 1
@@ -23,7 +23,10 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
