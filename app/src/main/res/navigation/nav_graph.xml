@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/profileActivity">
+
+    <activity
+        android:id="@+id/profileActivity"
+        android:name="com.example.thegoodplaceapp.ProfileActivity"
+        android:label="activity_profile"
+        tools:layout="@layout/activity_profile" />
+    <activity
+        android:id="@+id/allPlacesListActivity"
+        android:name="com.example.thegoodplaceapp.AllPlacesListActivity"
+        android:label="activity_all_places_list"
+        tools:layout="@layout/activity_all_places_list" />
+</navigation>

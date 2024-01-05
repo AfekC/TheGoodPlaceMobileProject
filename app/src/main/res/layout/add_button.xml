@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<ImageButton xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="58dp"
+    android:layout_height="58dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="8dp"
+    android:backgroundTint="#00FFFFFF"
+    android:baselineAlignBottom="true"
+    android:src="@drawable/baseline_add_circle_55"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    tools:srcCompat="@drawable/baseline_add_circle_55"/>
