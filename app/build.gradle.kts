@@ -4,12 +4,16 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("androidx.navigation.safeargs")
+    id("kotlin-kapt")
 }
 
 android {
     namespace = "com.example.thegoodplaceapp"
     compileSdk = 34
 
+    dataBinding {
+        enable=true
+    }
     defaultConfig {
         applicationId = "com.example.thegoodplaceapp"
         minSdk = 28
@@ -41,6 +45,8 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
+        dataBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddLocationFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageButton
+            android:id="@+id/exitButton"
+            android:layout_width="49dp"
+            android:layout_height="47dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="#00FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/baseline_brightness_50" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="9.5dp"
+            android:layout_marginEnd="9.5dp"
+            app:layout_constraintEnd_toEndOf="@+id/exitButton"
+            app:layout_constraintTop_toTopOf="@+id/exitButton"
+            app:srcCompat="@drawable/baseline_close_50" />
+
+        <ImageView
+            android:id="@+id/locationImage"
+            android:layout_width="244dp"
+            android:layout_height="244dp"
+            android:layout_marginTop="160dp"
+            android:cropToPadding="false"
+            android:scaleType="center"
+            android:src="@drawable/default_image_icon_missing_picture"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/editImageButton"
+            android:layout_width="69dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="-15dp"
+            android:layout_marginBottom="-14dp"
+            android:backgroundTint="#A8A7A7"
+            android:src="@drawable/baseline_photo_camera_50"
+            app:layout_constraintBottom_toBottomOf="@+id/locationImage"
+            app:layout_constraintStart_toStartOf="@+id/locationImage" />
+
+        <TableLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="280dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/locationImage">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="270dp"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:id="@+id/editTexName"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="text"
+                        android:text="שם המקום:"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/nameInputLayout"
+                        android:layout_width="164dp"
+                        android:layout_height="51dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/nameInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:background="#00FFFFFF"
+                            android:inputType="text"
+                            android:singleLine="true"
+                            android:textSize="25sp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="270dp"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:id="@+id/editTextCity"
+                        android:layout_width="46dp"
+                        android:layout_height="45dp"
+                        android:ems="10"
+                        android:inputType="text"
+                        android:text="עיר: "
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/cityInputLayout"
+                        android:layout_width="219dp"
+                        android:layout_height="53dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/cityInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:background="#00FFFFFF"
+                            android:inputType="text"
+                            android:singleLine="true"
+                            android:text=""
+                            android:textSize="25sp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="270dp"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:id="@+id/editTextDescription"
+                        android:layout_width="62dp"
+                        android:layout_height="48dp"
+                        android:ems="10"
+                        android:inputType="text"
+                        android:text="תיאור: "
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/descriptionInputLayout"
+                        android:layout_width="203dp"
+                        android:layout_height="59dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/descriptionInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:background="#00FFFFFF"
+                            android:inputType="text"
+                            android:singleLine="true"
+                            android:text=""
+                            android:textSize="25sp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </TableRow>
+        </TableLayout>
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:text="שמור"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

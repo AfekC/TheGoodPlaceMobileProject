@@ -3,16 +3,83 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/profileActivity">
+    app:startDestination="@id/homeFragment">
 
-    <activity
-        android:id="@+id/profileActivity"
-        android:name="com.example.thegoodplaceapp.ProfileActivity"
-        android:label="activity_profile"
-        tools:layout="@layout/activity_profile" />
-    <activity
-        android:id="@+id/allPlacesListActivity"
-        android:name="com.example.thegoodplaceapp.AllPlacesListActivity"
-        android:label="activity_all_places_list"
-        tools:layout="@layout/activity_all_places_list" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.thegoodplaceapp.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_addLocationFragment"
+            app:destination="@id/addLocationFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_allPlacesListFragment"
+            app:destination="@id/allPlacesListFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_myCollectionFragment"
+            app:destination="@id/myCollectionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.thegoodplaceapp.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/addLocationFragment"
+        android:name="com.example.thegoodplaceapp.AddLocationFragment"
+        android:label="fragment_add_location"
+        tools:layout="@layout/fragment_add_location" />
+    <fragment
+        android:id="@+id/allPlacesListFragment"
+        android:name="com.example.thegoodplaceapp.AllPlacesListFragment"
+        android:label="fragment_all_places_list"
+        tools:layout="@layout/fragment_all_places_list" >
+        <action
+            android:id="@+id/action_allPlacesListFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_allPlacesListFragment_to_addLocationFragment"
+            app:destination="@id/addLocationFragment" />
+        <action
+            android:id="@+id/action_allPlacesListFragment_to_myCollectionFragment"
+            app:destination="@id/myCollectionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myCollectionFragment"
+        android:name="com.example.thegoodplaceapp.MyCollectionFragment"
+        android:label="fragment_my_collection"
+        tools:layout="@layout/fragment_my_collection" >
+        <action
+            android:id="@+id/action_myCollectionFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_myCollectionFragment_to_addLocationFragment"
+            app:destination="@id/addLocationFragment" />
+        <action
+            android:id="@+id/action_myCollectionFragment_to_editLocationFragment"
+            app:destination="@id/editLocationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editLocationFragment"
+        android:name="com.example.thegoodplaceapp.EditLocationFragment"
+        android:label="fragment_edit_location"
+        tools:layout="@layout/fragment_edit_location" >
+        <argument
+            android:name="id"
+            app:argType="string" />
+        <argument
+            android:name="image"
+            app:argType="reference" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="city"
+            app:argType="string" />
+        <argument android:name="description" />
+    </fragment>
 </navigation>
