@@ -1,7 +1,6 @@
 package com.example.thegoodplaceapp
 
 import android.content.Context
-import android.util.Log
 import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.ImageButton
@@ -13,7 +12,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.core.view.setMargins
 import androidx.core.view.setPadding
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
+import com.example.thegoodplaceapp.database.Location
+import com.example.thegoodplaceapp.screens.myCollection.MyCollectionFragmentDirections
 
 class DynamicRow {
 
@@ -22,11 +22,7 @@ class DynamicRow {
         fun getRow(
             it: Context,
             isEditable: Boolean,
-            id: String,
-            imageSrc: Int,
-            name: String,
-            city: String,
-            description: String
+            location: Location,
         ): TableRow {
             val tr: TableRow = TableRow(it)
             tr.layoutParams = ViewGroup.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 250)
@@ -34,20 +30,16 @@ class DynamicRow {
 
             val rowLayout: LinearLayout = getRowLayout(it)
             val textLayout: LinearLayout = getTextLayout(it)
-            val image: ImageView = getImageToRow(it, imageSrc)
+            val image: ImageView = getImageToRow(it, location.image)
 
-            addLocationData(it, textLayout, name, city, description)
+            addLocationData(it, textLayout, location)
 
             rowLayout.addView(image)
             rowLayout.addView(textLayout)
 
             if (isEditable) {
                 val action = MyCollectionFragmentDirections.actionMyCollectionFragmentToEditLocationFragment(
-                        id,
-                        imageSrc,
-                        name,
-                        city,
-                        description)
+                    location)
                 val editLayout: LinearLayout = getButtonLayout(it, action)
 
                 rowLayout.addView(editLayout)
@@ -72,7 +64,7 @@ class DynamicRow {
             textLayout.orientation = LinearLayout.VERTICAL
             textLayout.setPadding(8)
             val textLayoutParams: TableRow.LayoutParams = TableRow.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
+                390,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
             textLayout.layoutParams = textLayoutParams
@@ -110,23 +102,21 @@ class DynamicRow {
         private fun addLocationData(
             it: Context,
             parentLayout: LinearLayout,
-            name: String,
-            city: String,
-            description: String
+            location: Location
         ) {
             val locationName: TextView = TextView(it)
-            locationName.setText("Name: " + name)
+            locationName.setText("Name: " + location.name)
             locationName.textSize = 20F
             parentLayout.addView(locationName)
 
             val locationCity: TextView = TextView(it)
-            locationCity.setText("City: " + city)
+            locationCity.setText("City: " + location.city)
             locationName.textSize = 18F
 
             parentLayout.addView(locationCity)
 
             val locationDescription: TextView = TextView(it)
-            locationDescription.setText("Description: " + description)
+            locationDescription.setText("Description: " + location.description)
             locationName.textSize = 18F
             parentLayout.addView(locationDescription)
         }

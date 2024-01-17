@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".EditLocationFragment">
+    tools:context=".screens.editLocation.EditLocationFragment">
 
+    <data>
+        <variable
+            name="locationViewModel"
+            type="com.example.thegoodplaceapp.screens.editLocation.EditLocationViewModel" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -95,6 +98,7 @@
                             android:background="#00FFFFFF"
                             android:inputType="text"
                             android:singleLine="true"
+                            android:text="@={locationViewModel.location.name}"
                             android:textSize="25sp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -134,7 +138,7 @@
                             android:background="#00FFFFFF"
                             android:inputType="text"
                             android:singleLine="true"
-                            android:text="@={city}"
+                            android:text="@={locationViewModel.location.city}"
                             android:textSize="25sp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -174,7 +178,7 @@
                             android:background="#00FFFFFF"
                             android:inputType="text"
                             android:singleLine="true"
-                            android:text="@={description}"
+                            android:text="@={locationViewModel.location.description}"
                             android:textSize="25sp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -190,7 +194,8 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:onClick="@{() -> locationViewModel.saveLocation()}"
             app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</FrameLayout>
+</layout>

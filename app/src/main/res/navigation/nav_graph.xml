@@ -3,11 +3,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
-
+    app:startDestination="@id/guestLandingPageFragment">
+    <fragment
+        android:id="@+id/guestLandingPageFragment"
+        android:name="com.example.thegoodplaceapp.screens.GuestLandingPage.GuestLandingPageFragment"
+        android:label="fragment_guest_landing_page"
+        tools:layout="@layout/fragment_guest_landing_page" >
+        <action
+            android:id="@+id/action_guestLandingPageFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_guestLandingPageFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.thegoodplaceapp.screens.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.thegoodplaceapp.screens.register.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.thegoodplaceapp.HomeFragment"
+        android:name="com.example.thegoodplaceapp.screens.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -25,19 +57,25 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.thegoodplaceapp.ProfileFragment"
+        android:name="com.example.thegoodplaceapp.screens.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_guestLandingPageFragment"
+            app:destination="@id/guestLandingPageFragment"
+            app:popUpTo="@id/guestLandingPageFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/addLocationFragment"
-        android:name="com.example.thegoodplaceapp.AddLocationFragment"
+        android:name="com.example.thegoodplaceapp.screens.addLocation.AddLocationFragment"
         android:label="fragment_add_location"
         tools:layout="@layout/fragment_add_location" />
     <fragment
         android:id="@+id/allPlacesListFragment"
-        android:name="com.example.thegoodplaceapp.AllPlacesListFragment"
+        android:name="com.example.thegoodplaceapp.screens.allLocationsList.AllLocationsListFragment"
         android:label="fragment_all_places_list"
-        tools:layout="@layout/fragment_all_places_list" >
+        tools:layout="@layout/fragment_all_locations_list" >
         <action
             android:id="@+id/action_allPlacesListFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
@@ -50,7 +88,7 @@
     </fragment>
     <fragment
         android:id="@+id/myCollectionFragment"
-        android:name="com.example.thegoodplaceapp.MyCollectionFragment"
+        android:name="com.example.thegoodplaceapp.screens.myCollection.MyCollectionFragment"
         android:label="fragment_my_collection"
         tools:layout="@layout/fragment_my_collection" >
         <action
@@ -65,21 +103,12 @@
     </fragment>
     <fragment
         android:id="@+id/editLocationFragment"
-        android:name="com.example.thegoodplaceapp.EditLocationFragment"
+        android:name="com.example.thegoodplaceapp.screens.editLocation.EditLocationFragment"
         android:label="fragment_edit_location"
         tools:layout="@layout/fragment_edit_location" >
         <argument
-            android:name="id"
-            app:argType="string" />
-        <argument
-            android:name="image"
-            app:argType="reference" />
-        <argument
-            android:name="name"
-            app:argType="string" />
-        <argument
-            android:name="city"
-            app:argType="string" />
-        <argument android:name="description" />
+            android:name="location"
+            app:argType="com.example.thegoodplaceapp.database.Location" />
     </fragment>
+
 </navigation>
