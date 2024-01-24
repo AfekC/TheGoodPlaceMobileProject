@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.navigation.Navigation
 import com.example.thegoodplaceapp.R
 
@@ -22,6 +23,9 @@ class RegisterFragment : Fragment() {
 
         view.findViewById<Button>(R.id.register).setOnClickListener {
             Navigation.findNavController(it).navigate(RegisterFragmentDirections.actionRegisterFragmentToHomeFragment())
+        }
+        view.findViewById<ImageButton>(R.id.exitButton).setOnClickListener {
+            Navigation.findNavController(it).navigateUp()
         }
 
         return view

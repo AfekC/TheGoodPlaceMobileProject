@@ -57,7 +57,6 @@ class MyCollectionFragment : Fragment() {
         viewModel.locations.observe(viewLifecycleOwner) { locations ->
             itemTable.removeAllViews()
             locations.forEach { location ->
-                location.image = R.drawable.avatar_default_icon
                 itemTable.addView(
                     DynamicRow.getRow(
                         context,

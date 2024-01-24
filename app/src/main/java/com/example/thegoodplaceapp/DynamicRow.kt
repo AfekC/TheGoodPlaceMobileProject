@@ -1,6 +1,7 @@
 package com.example.thegoodplaceapp
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.ImageButton
@@ -12,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.core.view.setMargins
 import androidx.core.view.setPadding
 import androidx.navigation.Navigation
-import com.example.thegoodplaceapp.database.Location
+import com.example.thegoodplaceapp.model.Location
 import com.example.thegoodplaceapp.screens.myCollection.MyCollectionFragmentDirections
 
 class DynamicRow {
@@ -71,13 +72,18 @@ class DynamicRow {
             return textLayout
         }
 
-        private fun getImageToRow(it: Context, imageSrc: Int): ImageView {
+        private fun getImageToRow(it: Context, imageByteArray: ByteArray?): ImageView {
             val image: ImageView = ImageView(it)
             val imageParams: TableRow.LayoutParams = TableRow.LayoutParams(250, 250)
             imageParams.setMargins(6)
             imageParams.rightMargin = 50
             image.layoutParams = imageParams
-            image.setImageResource(imageSrc)
+            if (imageByteArray != null) {
+                val bitmap = BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray.size)
+                image.setImageBitmap(bitmap)
+            } else {
+                image.setImageResource(R.drawable.baseline_collections_55)
+            }
             return image
         }
 

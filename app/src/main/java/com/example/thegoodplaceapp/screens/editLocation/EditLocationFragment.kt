@@ -1,18 +1,27 @@
 package com.example.thegoodplaceapp.screens.editLocation
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import androidx.lifecycle.Observer
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.ImageView
+import androidx.core.net.toFile
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.room.InvalidationTracker
+import com.example.thegoodplaceapp.MainActivity
 import com.example.thegoodplaceapp.R
 import com.example.thegoodplaceapp.database.LocationDatabase
 import com.example.thegoodplaceapp.databinding.FragmentEditLocationBinding
+import java.io.ByteArrayOutputStream
 
 
 class EditLocationFragment : Fragment() {
@@ -28,9 +37,13 @@ class EditLocationFragment : Fragment() {
         viewModel = ViewModelProvider(this,
             EditLocationViewModelFactory(
                 LocationDatabase.getInstance(application).locationDao,
-                application)
-        )
+                application,
+                (activity as MainActivity)))
             .get(EditLocationViewModel::class.java)
+
+        var args =EditLocationFragmentArgs.fromBundle(arguments!!)
+
+        viewModel.location.value = args.location
 
         binding.lifecycleOwner = this
         binding.locationViewModel = viewModel
@@ -42,11 +55,37 @@ class EditLocationFragment : Fragment() {
             Navigation.findNavController(binding.root).navigateUp()
         })
 
-        var args =EditLocationFragmentArgs.fromBundle(arguments!!)
+        val imageView: ImageView = binding.root.findViewById<ImageButton>(R.id.locationImage)
 
-        viewModel.location.value = args.location
+        loadImage(imageView, viewModel.location.value!!.image)
+
+        (activity as MainActivity).uriResult.observe(viewLifecycleOwner) { uri ->
+            Log.i("AFEK", uri.toString())
+            if (uri != null) {
+                imageView.setImageURI(uri)
+                val byteArray = imageToByteArray(imageView)
+                viewModel.location.value!!.image = byteArray
+                val bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+                imageView.setImageBitmap(bitmap)
+                (activity as MainActivity).uriResult.value = null
+            }
+        }
 
         return binding.root
     }
 
+    fun loadImage(imageView: ImageView, byteArray: ByteArray?) {
+        if (byteArray != null) {
+            val bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+            imageView.setImageBitmap(bitmap)
+        }
+    }
+
+    private fun imageToByteArray(image: ImageView): ByteArray {
+        val bitmap = (image.drawable as BitmapDrawable).bitmap
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream)
+
+        return stream.toByteArray()
+    }
 }

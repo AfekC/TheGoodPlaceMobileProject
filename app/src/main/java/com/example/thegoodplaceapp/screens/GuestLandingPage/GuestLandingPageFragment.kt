@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.Navigation
+import com.example.thegoodplaceapp.MainActivity
 import com.example.thegoodplaceapp.R
 
 class GuestLandingPageFragment : Fragment() {
@@ -21,6 +22,13 @@ class GuestLandingPageFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view: View =  inflater.inflate(R.layout.fragment_guest_landing_page, container, false)
+
+        (activity as MainActivity).profile.observe(viewLifecycleOwner) { profile ->
+            if ((activity as MainActivity).profile.value != null) {
+                Navigation.findNavController(view)
+                    .navigate(GuestLandingPageFragmentDirections.actionGuestLandingPageFragmentToHomeFragment())
+            }
+        }
 
         view.findViewById<Button>(R.id.login).setOnClickListener {
             Navigation.findNavController(it).navigate(GuestLandingPageFragmentDirections.actionGuestLandingPageFragmentToLoginFragment())

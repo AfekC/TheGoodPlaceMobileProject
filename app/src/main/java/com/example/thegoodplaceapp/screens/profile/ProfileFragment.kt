@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.navigation.Navigation
+import com.example.thegoodplaceapp.MainActivity
 import com.example.thegoodplaceapp.R
+import com.example.thegoodplaceapp.screens.GuestLandingPage.GuestLandingPageFragmentDirections
 
 class ProfileFragment : Fragment() {
 
@@ -23,6 +25,7 @@ class ProfileFragment : Fragment() {
         }
 
         view.findViewById<TextView>(R.id.logout).setOnClickListener {
+            (activity as MainActivity).profile.value = null
             Navigation.findNavController(it).navigate(ProfileFragmentDirections.actionProfileFragmentToGuestLandingPageFragment())
         }
 

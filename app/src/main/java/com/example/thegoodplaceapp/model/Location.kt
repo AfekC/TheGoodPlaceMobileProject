@@ -1,9 +1,8 @@
-package com.example.thegoodplaceapp.database
+package com.example.thegoodplaceapp.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Entity(tableName = "location_table")
@@ -18,7 +17,7 @@ class Location (
     @ColumnInfo(name = "description")
     var description: String = "",
     @ColumnInfo(name = "image_data")
-    var image: Int = 1,
+    var image: ByteArray? = null,
     @ColumnInfo(name = "creator_id")
     var creator: String = ""
 ): java.io.Serializable
