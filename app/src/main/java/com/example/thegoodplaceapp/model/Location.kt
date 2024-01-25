@@ -8,8 +8,8 @@ import kotlinx.serialization.Serializable
 @Entity(tableName = "location_table")
 @Serializable
 class Location (
-    @PrimaryKey(autoGenerate = true)
-    var locationId: Long = 0L,
+    @PrimaryKey
+    var locationId: String = "",
     @ColumnInfo(name = "name")
     var name: String = "",
     @ColumnInfo(name = "city")
