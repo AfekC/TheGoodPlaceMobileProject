@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.thegoodplaceapp.model.Location
 
-@Database(entities = [Location::class], version = 2, exportSchema = false)
+@Database(entities = [Location::class], version = 4, exportSchema = false)
 abstract class LocationDatabase : RoomDatabase() {
 
     abstract val locationDao: LocationDao

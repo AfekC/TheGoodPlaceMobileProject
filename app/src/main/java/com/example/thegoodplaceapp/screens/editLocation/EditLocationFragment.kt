@@ -21,6 +21,7 @@ import com.example.thegoodplaceapp.MainActivity
 import com.example.thegoodplaceapp.R
 import com.example.thegoodplaceapp.database.LocationDatabase
 import com.example.thegoodplaceapp.databinding.FragmentEditLocationBinding
+import com.example.thegoodplaceapp.utils.ImageUtil
 import java.io.ByteArrayOutputStream
 
 
@@ -57,13 +58,13 @@ class EditLocationFragment : Fragment() {
 
         val imageView: ImageView = binding.root.findViewById<ImageButton>(R.id.locationImage)
 
-        loadImage(imageView, viewModel.location.value!!.image)
+        ImageUtil.loadImage(imageView, viewModel.location.value!!.image)
 
         (activity as MainActivity).uriResult.observe(viewLifecycleOwner) { uri ->
             Log.i("AFEK", uri.toString())
             if (uri != null) {
                 imageView.setImageURI(uri)
-                val byteArray = imageToByteArray(imageView)
+                val byteArray = ImageUtil.imageToByteArray(imageView)
                 viewModel.location.value!!.image = byteArray
                 val bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
                 imageView.setImageBitmap(bitmap)
@@ -72,20 +73,5 @@ class EditLocationFragment : Fragment() {
         }
 
         return binding.root
-    }
-
-    fun loadImage(imageView: ImageView, byteArray: ByteArray?) {
-        if (byteArray != null) {
-            val bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
-            imageView.setImageBitmap(bitmap)
-        }
-    }
-
-    private fun imageToByteArray(image: ImageView): ByteArray {
-        val bitmap = (image.drawable as BitmapDrawable).bitmap
-        val stream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream)
-
-        return stream.toByteArray()
     }
 }

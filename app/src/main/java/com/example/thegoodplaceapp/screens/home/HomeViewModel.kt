@@ -56,7 +56,7 @@ class HomeViewModel(val application: Application) : ViewModel() {
                     location.latitude.toString() + "," + location.longitude.toString(),
                     "he",
                     "ROOFTOP",
-                    "AIzaSyB7l4EYj1l_0pSiHlvdj5qp6OV8ZOoh1HM").enqueue(
+                    "AIzaSyDOnAhK7xf7eHSNmZ-66G0XDqXcbmHI4hE").enqueue(
                     object: retrofit2.Callback<LocationProperty> {
                     override fun onFailure(call: Call<LocationProperty>, t: Throwable) {
                         _response.value = "תקלת תקשורת!"

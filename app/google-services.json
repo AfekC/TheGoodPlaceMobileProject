@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "129733765208",
+    "project_id": "thegoodplace-fb2ef",
+    "storage_bucket": "thegoodplace-fb2ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:129733765208:android:ecd545d39f1eea49ed022d",
+        "android_client_info": {
+          "package_name": "com.example.thegoodplaceapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOnAhK7xf7eHSNmZ-66G0XDqXcbmHI4hE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

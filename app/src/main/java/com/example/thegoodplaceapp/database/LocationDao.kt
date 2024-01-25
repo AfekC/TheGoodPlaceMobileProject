@@ -23,7 +23,7 @@ interface LocationDao {
     fun deleteAll()
 
     @Query("SELECT * FROM location_table WHERE locationId = :key")
-    fun get(key: Long): Location
+    fun get(key: String): Location
 
     @Query("SELECT * FROM location_table")
     fun getAllLocations(): LiveData<List<Location>>

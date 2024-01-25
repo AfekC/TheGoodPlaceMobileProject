@@ -5,30 +5,45 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import android.widget.ImageButton
 import androidx.navigation.Navigation
+import com.example.thegoodplaceapp.MainActivity
 import com.example.thegoodplaceapp.R
+import com.example.thegoodplaceapp.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var viewModel: LoginViewModel
+    private lateinit var binding: FragmentLoginBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view: View = inflater.inflate(R.layout.fragment_login, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
 
-        view.findViewById<Button>(R.id.login).setOnClickListener {
-            Navigation.findNavController(it).navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+        viewModel = ViewModelProvider(this,
+            LoginViewModelFactory((activity as MainActivity))
+        )
+            .get(LoginViewModel::class.java)
+
+        binding.lifecycleOwner = this
+        binding.loginViewModel = viewModel
+
+        binding.root.findViewById<ImageButton>(R.id.exitButton).setOnClickListener {
+            Navigation.findNavController(it).navigateUp()
         }
-        view.findViewById<ImageButton>(R.id.exitButton).setOnClickListener {
+        binding.root.findViewById<ImageButton>(R.id.exitButton).setOnClickListener {
             Navigation.findNavController(it).navigateUp()
         }
 
-        return view
+        viewModel.eventSaved.observe(viewLifecycleOwner, Observer { isSaved ->
+            Navigation.findNavController(binding.root).navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+        })
+
+        return binding.root
     }
 }

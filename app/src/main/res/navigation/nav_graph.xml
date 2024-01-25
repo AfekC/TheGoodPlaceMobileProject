@@ -6,7 +6,7 @@
     app:startDestination="@id/guestLandingPageFragment">
     <fragment
         android:id="@+id/guestLandingPageFragment"
-        android:name="com.example.thegoodplaceapp.screens.GuestLandingPage.GuestLandingPageFragment"
+        android:name="com.example.thegoodplaceapp.screens.guestLandingPage.GuestLandingPageFragment"
         android:label="fragment_guest_landing_page"
         tools:layout="@layout/fragment_guest_landing_page" >
         <action

@@ -10,16 +10,18 @@ import androidx.lifecycle.ViewModel
 import com.example.thegoodplaceapp.MainActivity
 import com.example.thegoodplaceapp.model.Location
 import com.example.thegoodplaceapp.database.LocationDao
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.firestore
+import com.google.firebase.storage.storage
+import java.time.LocalDateTime
 
 class AddLocationViewModel(val database: LocationDao, val application: Application, val mainActivity: MainActivity): ViewModel() {
 
-    private var viewModelJob = Job()
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+    val db = Firebase.firestore
+    val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    val locationsImagesRef =  Firebase.storage.reference.child("location")
 
     val image: MutableLiveData<ByteArray?> = MutableLiveData<ByteArray?>()
     val name: MutableLiveData<String> = MutableLiveData<String>()
@@ -42,20 +44,29 @@ class AddLocationViewModel(val database: LocationDao, val application: Applicati
     }
 
     fun saveLocation() {
-        uiScope.launch {
-            saveInDatabase(Location(0L, name.value!!, city.value!!, description.value!!, image.value))
-            _eventSaved.value = true
-        }
-    }
+        val location = hashMapOf(
+            "name" to name.value,
+            "city" to city.value,
+            "description" to description.value,
+            "creator" to auth.currentUser!!.uid
+        )
 
-    private suspend fun saveInDatabase(location: Location) {
-        return withContext(Dispatchers.IO) {
-            database.insert(location)
-        }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
+        db.collection("locations")
+            .add(location)
+            .addOnSuccessListener { documentReference ->
+                if (image.value != null) {
+                    locationsImagesRef.child(documentReference.id).putBytes(image.value!!).addOnSuccessListener {
+                        val location = hashMapOf(
+                            "imageVersion" to LocalDateTime.now().nano
+                        )
+                        db.collection("locations").document(documentReference.id).set(location, SetOptions.merge())
+                    }
+                }
+                Log.d("firebase", "DocumentSnapshot added with ID: ${documentReference.id}")
+                _eventSaved.value = true
+            }
+            .addOnFailureListener { e ->
+                Log.w("firebase", "Error adding document", e)
+            }
     }
 }

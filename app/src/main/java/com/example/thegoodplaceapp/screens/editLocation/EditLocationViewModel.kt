@@ -10,16 +10,19 @@ import androidx.lifecycle.ViewModel
 import com.example.thegoodplaceapp.MainActivity
 import com.example.thegoodplaceapp.model.Location
 import com.example.thegoodplaceapp.database.LocationDao
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.firestore
+import com.google.firebase.storage.storage
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 class EditLocationViewModel(val database: LocationDao, val application: Application, val mainActivity: MainActivity): ViewModel() {
 
-    private var viewModelJob = Job()
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+    val db = Firebase.firestore
+    val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    val locationsImagesRef =  Firebase.storage.reference.child("location")
 
     val location: MutableLiveData<Location> = MutableLiveData<Location>()
 
@@ -35,39 +38,43 @@ class EditLocationViewModel(val database: LocationDao, val application: Applicat
     }
 
     fun saveLocation() {
-        uiScope.launch {
-            saveInDatabase(location.value!!)
-            _eventSaved.value = true
-        }
+        val locationToFirebase = hashMapOf(
+            "name" to location.value!!.name,
+            "city" to location.value!!.city,
+            "description" to location.value!!.description,
+            "creator" to auth.currentUser!!.uid,
+            "imageVersion" to LocalDateTime.now().nano
+        )
+
+        db.collection("locations")
+            .document(location.value!!.locationId)
+            .set(locationToFirebase)
+            .addOnSuccessListener { documentReference ->
+                if (location.value!!.image != null) {
+                    locationsImagesRef.child(location.value!!.locationId)
+                        .putBytes(location.value!!.image!!)
+                }
+                Log.d("firebase", "DocumentSnapshot updated with ID: ${location.value!!.locationId}")
+                _eventSaved.value = true
+            }
+            .addOnFailureListener { e ->
+                Log.w("firebase", "Error adding document", e)
+            }
     }
 
     fun deleteLocation() {
-        uiScope.launch {
-            deleteFromDatabase(location.value!!)
-            _eventSaved.value = true
-        }
-    }
+        db.collection("locations")
+            .document(location.value!!.locationId)
+            .delete()
+            .addOnSuccessListener{
+                _eventSaved.value = true
+                locationsImagesRef.child(location.value!!.locationId).delete().addOnFailureListener {
+                    Log.w("firebase", "location does not have a picture")
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.w("firebase", "Error deleting document", e)
+            }
 
-    private suspend fun saveInDatabase(location: Location) {
-        return withContext(Dispatchers.IO) {
-            database.update(location)
-        }
-    }
-
-    private suspend fun deleteFromDatabase(location: Location) {
-        return withContext(Dispatchers.IO) {
-            database.delete(location)
-        }
-    }
-
-    private suspend fun deleteFromDatabase(location: Location) {
-        return withContext(Dispatchers.IO) {
-            database.delete(location)
-        }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
     }
 }
